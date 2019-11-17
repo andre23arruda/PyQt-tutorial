@@ -43,7 +43,7 @@ No meu caso, uso o anaconda. Então tenho como resultado:
 
 Dentro da pasta Scripts deve conter um arquivo chamado:
     
-    pyui5.exe
+    pyuic5.exe
     
 Ele é o responsável em converter o .ui do qtdesigner em .py
 
@@ -55,3 +55,7 @@ Então sempre que modificarmos alguma coisa no designer, teremos que usar o coma
 
 
 # Abrir teste.py no vscode e ser feliz
+
+    Pode usar meu teste.py como exemplo, pois já adicionei uma função para o evento do botão
+    
+    Pode usar o teste.ui também para converter em .py
