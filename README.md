@@ -49,10 +49,11 @@ Ele é o responsável em converter o .ui do qtdesigner em .py
 
 Então sempre que modificarmos alguma coisa no designer, teremos que usar o comando abaixo
 
-# Copiar o .ui pelo qtdesigner e converter para .py
+# Copiar o .ui criado pelo qtdesigner e converter para .py
 
-    pyuic5 -x "C:\Users\alca0\Documents\Python Scripts\teste.ui" -o C:\Users\alca0\Documents\Python Scripts\teste.py"
+    pyuic5 -x "C:\Users\alca0\Documents\teste.ui" -o C:\Users\alca0\Documents\teste.py"
 
+Nesse caso eu salvei o .ui na minha pasta de documentos e vou salvar o .py nela mesmo
 
 # Abrir teste.py no vscode e ser feliz
 
