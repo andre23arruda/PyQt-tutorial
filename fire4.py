@@ -37,9 +37,18 @@ class Ui_Dialog(object):
         self.parar_button = QtWidgets.QPushButton(Dialog)
         self.parar_button.setGeometry(QtCore.QRect(610, 670, 151, 61))
         self.parar_button.setObjectName("parar_button")
+        self.groupBox = QtWidgets.QGroupBox(Dialog)
+        self.groupBox.setGeometry(QtCore.QRect(820, 660, 120, 80))
+        self.groupBox.setObjectName("groupBox")
+        self.esquerda_button = QtWidgets.QRadioButton(self.groupBox)
+        self.esquerda_button.setGeometry(QtCore.QRect(10, 20, 95, 20))
+        self.esquerda_button.setObjectName("esquerda_button")
+        self.direita_button = QtWidgets.QRadioButton(self.groupBox)
+        self.direita_button.setGeometry(QtCore.QRect(10, 50, 95, 20))
+        self.direita_button.setObjectName("direita_button")
+        self.esquerda_button.setChecked(True)
 
         self.decay_factor = 1.5
-        self.stop = 0
         self.fire = np.zeros([70, 100],dtype = 'uint8')
 
         self.img_canvas = FigureCanvas(Figure())
@@ -53,14 +62,18 @@ class Ui_Dialog(object):
         self.retranslateUi(Dialog)
         QtCore.QMetaObject.connectSlotsByName(Dialog)
 
+
     def retranslateUi(self, Dialog):
         _translate = QtCore.QCoreApplication.translate
         Dialog.setWindowTitle(_translate("Dialog", "Fire_Doom"))
         self.comecar_button.setText(_translate("Dialog", "Começar"))
         self.parar_button.setText(_translate("Dialog", "Parar"))
+        self.esquerda_button.setText(_translate("Dialog", "Esquerda"))
+        self.direita_button.setText(_translate("Dialog", "Direita"))
         self.fire_slider.valueChanged.connect(self.getSlider)
         self.comecar_button.clicked.connect(self.startFire)
         self.parar_button.clicked.connect(self.stopFire)
+
 
     def startFire(self):
         self.timer.start()
@@ -72,21 +85,29 @@ class Ui_Dialog(object):
 
         for row in range(heigth - 1):
             for col in range(width):
+
                 decay_factor = self.decay_factor
                 decay = np.int_(np.floor(np.random.rand() * decay_factor))
-                self.fire[heigth - 2 - row, col - decay] = np.clip(self.fire[heigth - 1 - row, col] - decay , 0, 36)
+
+                if self.direita_button.isChecked():
+                    col = width - 2 - col
+                    col_index = np.clip(col + decay, 0, 99)
+                else:
+                    col_index = col - decay
+
+                self.fire[heigth - 2 - row, col_index] = np.clip(self.fire[heigth - 1 - row, col] - decay , 0, 36)
+
         self.img_ax.clear()        
         self.img_ax.imshow(self.fire, cmap = 'hot', vmin = 0, vmax = 36, aspect = 'auto')
         self.img_ax.axis('off')
         self.img_ax.figure.canvas.draw()
-        print('Deu bom')
+        # print('Deu bom')
         
     def getSlider(self):
         self.decay_factor = 11.5 - self.fire_slider.value()/10
-        print(self.decay_factor)
+        # print(self.decay_factor)
 
     def stopFire(self):
-        self.stop = 1
         self.timer.stop()
 
     
